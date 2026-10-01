@@ -1,0 +1,33 @@
+schemaVersion: 1
+modules:
+  - moduleId: zalava-module-channel-telegram
+    version: 0.1.0-alpha.3
+    displayName: Telegram channel
+    description: Telegram long-polling channel adapter for Zalava semantic channel events.
+    supportUrl: https://github.com/Zalava/zalava-module-channel-telegram
+    artifact:
+      groupId: org.zalava.modules
+      artifactId: zalava-module-channel-telegram
+      version: 0.1.0-alpha.3
+    source:
+      repository: https://github.com/Zalava/zalava-module-channel-telegram.git
+      license: Apache-2.0
+    build:
+      command: ["./gradlew", "check"]
+      verificationCommand: ["./gradlew", "test"]
+    compatibility:
+      seaRuntime: ">=0.1.0-alpha.3 <0.2.0"
+    configurationSchema:
+      type: object
+      additionalProperties: false
+      properties:
+        botToken:
+          type: string
+          description: Telegram bot token, provided through module secret configuration.
+    factories: []
+    services:
+      provided: []
+      required: []
+    operations: []
+    security:
+      permissions: []
