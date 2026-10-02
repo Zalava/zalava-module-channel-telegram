@@ -12,7 +12,7 @@ import org.telegram.telegrambots.longpolling.util.LongPollingSingleThreadUpdateC
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.api.objects.message.Message;
-import org.zalava.channels.*;
+import org.zalava.api.extensions.channels.*;
 
 class TelegramBoundaryTest {
   @Test

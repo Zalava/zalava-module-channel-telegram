@@ -14,7 +14,7 @@ java {
   withJavadocJar()
 }
 
-def moduleApiVersion = providers.gradleProperty('moduleApiVersion').orElse('0.1.0-alpha.5')
+def moduleApiVersion = providers.gradleProperty('moduleApiVersion').orElse('0.1.0-alpha.6')
 
 dependencies {
   compileOnly "org.zalava:module-api:${moduleApiVersion.get()}"

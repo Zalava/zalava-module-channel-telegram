@@ -7,12 +7,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.zalava.channels.ApprovalOperation;
-import org.zalava.channels.ApprovalRequest;
-import org.zalava.channels.ChannelDestination;
-import org.zalava.channels.ChannelEvent;
-import org.zalava.channels.ChannelPrivacy;
-import org.zalava.testing.ModuleContractKit;
+import org.zalava.api.extensions.channels.ApprovalOperation;
+import org.zalava.api.extensions.channels.ApprovalRequest;
+import org.zalava.api.extensions.channels.ChannelDestination;
+import org.zalava.api.extensions.channels.ChannelEvent;
+import org.zalava.api.extensions.channels.ChannelPrivacy;
+import org.zalava.api.testing.ModuleContractKit;
 
 class TelegramChannelTest {
   @Test
@@ -42,7 +42,7 @@ class TelegramChannelTest {
               assertThat(value.identity().subject()).isEqualTo("123456");
               assertThat(value.destination().privacy()).isEqualTo(ChannelPrivacy.PRIVATE);
               assertThat(value.input())
-                  .isEqualTo(new org.zalava.channels.ChannelInput.Text("hello"));
+                  .isEqualTo(new org.zalava.api.extensions.channels.ChannelInput.Text("hello"));
             });
     assertThat(
             TelegramInboundMapper.text(
@@ -56,7 +56,7 @@ class TelegramChannelTest {
             value ->
                 assertThat(value.input())
                     .isEqualTo(
-                        new org.zalava.channels.ChannelInput.Action(
+                        new org.zalava.api.extensions.channels.ChannelInput.Action(
                             "core-action-opaque", java.util.Map.of())));
   }
 

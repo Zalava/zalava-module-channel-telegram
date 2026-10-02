@@ -1,7 +1,7 @@
 package org.zalava.modules.telegram;
 
 import java.util.List;
-import org.zalava.channels.ChannelEvent;
+import org.zalava.api.extensions.channels.ChannelEvent;
 
 final class TelegramOutboundMapper {
   private TelegramOutboundMapper() {}

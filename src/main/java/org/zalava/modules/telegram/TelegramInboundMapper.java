@@ -1,12 +1,12 @@
 package org.zalava.modules.telegram;
 
 import java.util.Optional;
-import org.zalava.channels.ChannelDestination;
-import org.zalava.channels.ChannelInput;
-import org.zalava.channels.ChannelInteractionKind;
-import org.zalava.channels.ChannelPrivacy;
-import org.zalava.channels.ExternalIdentityReference;
-import org.zalava.channels.IncomingInteraction;
+import org.zalava.api.extensions.channels.ChannelDestination;
+import org.zalava.api.extensions.channels.ChannelInput;
+import org.zalava.api.extensions.channels.ChannelInteractionKind;
+import org.zalava.api.extensions.channels.ChannelPrivacy;
+import org.zalava.api.extensions.channels.ExternalIdentityReference;
+import org.zalava.api.extensions.channels.IncomingInteraction;
 
 /** Pure mapping with a deliberately small trusted input surface for SDK adapters and tests. */
 final class TelegramInboundMapper {

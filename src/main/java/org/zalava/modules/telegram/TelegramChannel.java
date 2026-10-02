@@ -1,13 +1,13 @@
 package org.zalava.modules.telegram;
 
 import java.util.Objects;
-import org.zalava.channels.ChannelCapabilities;
-import org.zalava.channels.ChannelDescriptor;
-import org.zalava.channels.ChannelEvent;
-import org.zalava.channels.ChannelInteractionReceiver;
-import org.zalava.channels.ChannelTransportContext;
-import org.zalava.channels.IncomingInteraction;
-import org.zalava.channels.ZalavaChannel;
+import org.zalava.api.extensions.channels.ChannelCapabilities;
+import org.zalava.api.extensions.channels.ChannelDescriptor;
+import org.zalava.api.extensions.channels.ChannelEvent;
+import org.zalava.api.extensions.channels.ChannelInteractionReceiver;
+import org.zalava.api.extensions.channels.ChannelTransportContext;
+import org.zalava.api.extensions.channels.IncomingInteraction;
+import org.zalava.api.extensions.channels.ZalavaChannel;
 
 /** Protocol boundary: maps Telegram updates/events without owning Core policy or state. */
 public final class TelegramChannel implements ZalavaChannel {
