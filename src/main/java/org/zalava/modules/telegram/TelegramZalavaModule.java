@@ -5,11 +5,11 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import org.zalava.ModuleDescriptor;
-import org.zalava.ModuleConfigurationDescriptor;
-import org.zalava.ProviderFactory;
-import org.zalava.ZalavaModule;
-import org.zalava.channels.ZalavaChannel;
+import org.zalava.api.ModuleConfigurationDescriptor;
+import org.zalava.api.ModuleDescriptor;
+import org.zalava.api.ProviderFactory;
+import org.zalava.api.ZalavaModule;
+import org.zalava.api.extensions.channels.ZalavaChannel;
 
 /** Module entry point. Core owns identity linking, authorization and conversation state. */
 public final class TelegramZalavaModule implements ZalavaModule {
@@ -26,7 +26,8 @@ public final class TelegramZalavaModule implements ZalavaModule {
 
   @Override
   public ModuleDescriptor descriptor() {
-    return new ModuleDescriptor(MODULE_ID, version(), "Telegram channel", "Telegram semantic channel adapter");
+    return new ModuleDescriptor(
+        MODULE_ID, version(), "Telegram channel", "Telegram semantic channel adapter");
   }
 
   @Override
@@ -36,10 +37,14 @@ public final class TelegramZalavaModule implements ZalavaModule {
 
   @Override
   public ModuleConfigurationDescriptor configuration() {
-    return new ModuleConfigurationDescriptor(Map.of(
-        "type", "object",
-        "additionalProperties", false,
-        "properties", Map.of("botTokenRef", Map.of("type", "string", "x-secret-reference", true))));
+    return new ModuleConfigurationDescriptor(
+        Map.of(
+            "type",
+            "object",
+            "additionalProperties",
+            false,
+            "properties",
+            Map.of("botTokenRef", Map.of("type", "string", "x-secret-reference", true))));
   }
 
   @Override
