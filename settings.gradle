@@ -1,0 +1,9 @@
+dependencyResolutionManagement {
+  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositories {
+    maven { url = uri(providers.gradleProperty('moduleApiRepositoryUrl').orElse('https://zalava.github.io/zalava-maven/').get()) }
+    mavenCentral()
+  }
+}
+
+rootProject.name = 'zalava-module-channel-telegram'
