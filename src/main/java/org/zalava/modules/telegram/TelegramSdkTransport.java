@@ -22,23 +22,29 @@ public final class TelegramSdkTransport implements TelegramDeliveryGateway, Auto
     this.client = new OkHttpTelegramClient(botToken);
     this.application = new TelegramBotsLongPollingApplication();
     try {
-      application.registerBot(botToken, (LongPollingSingleThreadUpdateConsumer) update -> receive(update, channel));
+      application.registerBot(
+          botToken, (LongPollingSingleThreadUpdateConsumer) update -> receive(update, channel));
     } catch (Exception exception) {
       closeQuietly(application);
       throw new IllegalStateException("Could not start Telegram long polling", exception);
     }
   }
 
-  /** Starts long polling; callers must obtain the token from an approved secret/configuration source. */
+  /**
+   * Starts long polling; callers must obtain the token from an approved secret/configuration
+   * source.
+   */
   public static TelegramSdkTransport start(String botToken, TelegramChannel channel) {
-    if (botToken == null || botToken.isBlank()) throw new IllegalArgumentException("botToken must not be blank");
+    if (botToken == null || botToken.isBlank())
+      throw new IllegalArgumentException("botToken must not be blank");
     TelegramChannel target = Objects.requireNonNull(channel, "channel");
     TelegramSdkTransport transport = new TelegramSdkTransport(botToken, target);
     target.connect(transport);
     return transport;
   }
 
-  @Override public void send(TelegramOutboundMessage message) {
+  @Override
+  public void send(TelegramOutboundMessage message) {
     SendMessage request = new SendMessage(message.chatId(), message.text());
     if (!message.buttons().isEmpty()) {
       InlineKeyboardRow row = new InlineKeyboardRow();
@@ -60,20 +66,41 @@ public final class TelegramSdkTransport implements TelegramDeliveryGateway, Auto
     if (update == null || update.getUpdateId() == null) return;
     if (update.hasMessage()) {
       Message message = update.getMessage();
-      if (message == null || !message.hasText() || message.getFrom() == null || message.getFrom().getId() == null) return;
-      TelegramInboundMapper.text(new TelegramInboundUpdate(String.valueOf(update.getUpdateId()),
-          String.valueOf(message.getFrom().getId()), String.valueOf(message.getChatId()), message.isUserMessage(), message.getText(), null))
+      if (message == null
+          || !message.hasText()
+          || message.getFrom() == null
+          || message.getFrom().getId() == null) return;
+      TelegramInboundMapper.text(
+              new TelegramInboundUpdate(
+                  String.valueOf(update.getUpdateId()),
+                  String.valueOf(message.getFrom().getId()),
+                  String.valueOf(message.getChatId()),
+                  message.isUserMessage(),
+                  message.getText(),
+                  null))
           .ifPresent(channel::receive);
     } else if (update.hasCallbackQuery()) {
       CallbackQuery callback = update.getCallbackQuery();
-      if (callback == null || callback.getFrom() == null || callback.getFrom().getId() == null || callback.getMessage() == null) return;
-      TelegramInboundMapper.callback(new TelegramInboundUpdate(String.valueOf(update.getUpdateId()),
-          String.valueOf(callback.getFrom().getId()), String.valueOf(callback.getMessage().getChatId()),
-          callback.getMessage().isUserMessage(), null, callback.getData())).ifPresent(channel::receive);
+      if (callback == null
+          || callback.getFrom() == null
+          || callback.getFrom().getId() == null
+          || callback.getMessage() == null) return;
+      TelegramInboundMapper.callback(
+              new TelegramInboundUpdate(
+                  String.valueOf(update.getUpdateId()),
+                  String.valueOf(callback.getFrom().getId()),
+                  String.valueOf(callback.getMessage().getChatId()),
+                  callback.getMessage().isUserMessage(),
+                  null,
+                  callback.getData()))
+          .ifPresent(channel::receive);
     }
   }
 
-  @Override public void close() { closeQuietly(application); }
+  @Override
+  public void close() {
+    closeQuietly(application);
+  }
 
   private static void closeQuietly(TelegramBotsLongPollingApplication application) {
     try {
