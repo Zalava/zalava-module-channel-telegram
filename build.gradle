@@ -1,3 +1,8 @@
+buildscript {
+  repositories { mavenCentral() }
+  dependencies { classpath 'org.yaml:snakeyaml:2.5' }
+}
+
 plugins {
     id 'jacoco'
     id 'com.diffplug.spotless' version '7.2.1'
@@ -6,7 +11,11 @@ plugins {
 }
 
 group = 'org.zalava.modules'
-version = '0.1.0-alpha.5'
+def metadata = new org.yaml.snakeyaml.Yaml().load(file('module-metadata.yaml').getText('UTF-8'))
+version = metadata.modules[0].version
+if (metadata.modules[0].artifact.version != version) throw new GradleException('Metadata artifact version must match module version')
+def releaseTag = System.getenv('CI_COMMIT_TAG')
+if (releaseTag && releaseTag != "v${version}") throw new GradleException('Release tag must match module metadata version')
 
 java {
   toolchain { languageVersion = JavaLanguageVersion.of(25) }
@@ -29,6 +38,7 @@ dependencies {
 
 tasks.withType(JavaCompile).configureEach { options.release = 25 }
 tasks.named('test') {
+    classpath = files(sourceSets.test.output, configurations.testRuntimeClasspath)
   useJUnitPlatform()
   dependsOn tasks.named('jar')
   systemProperty 'module.artifact', tasks.named('jar').flatMap { it.archiveFile }.get().asFile.absolutePath
@@ -46,7 +56,7 @@ tasks.register('verifyReleaseArtifact') {
   doLast {
     def contents = zipTree(tasks.named('jar').get().archiveFile.get().asFile)
     if (contents.matching { include 'module-metadata.yaml' }.isEmpty()) throw new GradleException('module JAR must embed module-metadata.yaml')
-    if (!contents.matching { include 'org/zalava/channels/**' }.isEmpty()) throw new GradleException('module JAR must not bundle module-api classes')
+    if (!contents.matching { include 'org/zalava/api/**' }.isEmpty()) throw new GradleException('module JAR must not bundle module-api classes')
   }
 }
 tasks.named('check') { dependsOn tasks.named('verifyReleaseArtifact') }
