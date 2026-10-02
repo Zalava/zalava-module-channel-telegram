@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'org.zalava.modules'
-version = '0.1.0-alpha.3'
+version = '0.1.0-alpha.5'
 
 java {
   toolchain { languageVersion = JavaLanguageVersion.of(25) }
@@ -12,7 +12,7 @@ java {
   withJavadocJar()
 }
 
-def moduleApiVersion = providers.gradleProperty('moduleApiVersion').orElse('0.1.0-alpha.3')
+def moduleApiVersion = providers.gradleProperty('moduleApiVersion').orElse('0.1.0-alpha.5')
 
 dependencies {
   compileOnly "org.zalava:module-api:${moduleApiVersion.get()}"

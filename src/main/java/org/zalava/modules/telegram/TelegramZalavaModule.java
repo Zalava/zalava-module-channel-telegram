@@ -39,7 +39,7 @@ public final class TelegramZalavaModule implements ZalavaModule {
     return new ModuleConfigurationDescriptor(Map.of(
         "type", "object",
         "additionalProperties", false,
-        "properties", Map.of("botToken", Map.of("type", "string", "writeOnly", true))));
+        "properties", Map.of("botTokenRef", Map.of("type", "string", "x-secret-reference", true))));
   }
 
   @Override

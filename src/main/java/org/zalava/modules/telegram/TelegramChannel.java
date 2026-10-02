@@ -5,6 +5,7 @@ import org.zalava.channels.ChannelCapabilities;
 import org.zalava.channels.ChannelDescriptor;
 import org.zalava.channels.ChannelEvent;
 import org.zalava.channels.ChannelInteractionReceiver;
+import org.zalava.channels.ChannelTransportContext;
 import org.zalava.channels.IncomingInteraction;
 import org.zalava.channels.ZalavaChannel;
 
@@ -37,6 +38,20 @@ public final class TelegramChannel implements ZalavaChannel {
 
   @Override public void bind(ChannelInteractionReceiver receiver) {
     this.receiver = Objects.requireNonNull(receiver, "receiver");
+  }
+
+  @Override public void start(ChannelTransportContext context) {
+    Object reference = context.configuration().get("botTokenRef");
+    if (!(reference instanceof String tokenReference) || tokenReference.isBlank()) {
+      throw new IllegalArgumentException("Telegram botTokenRef configuration is required");
+    }
+    char[] secret = context.secrets().resolve(tokenReference)
+        .orElseThrow(() -> new IllegalStateException("Telegram bot token secret is unavailable"));
+    try {
+      TelegramSdkTransport.start(new String(secret), this);
+    } finally {
+      java.util.Arrays.fill(secret, '\0');
+    }
   }
 
   /** Called by the SDK adapter after strict transport mapping; rejected updates never reach Core. */
