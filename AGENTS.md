@@ -31,3 +31,10 @@ commits through successful publication workflows. A tag alone is not a release.
 Adapter unit tests run in the separate `unitTest` lane and contribute to the
 aggregate coverage gate. They do not replace or alter the isolated built-JAR
 contract lane in `test`, and are not reported as artifact acceptance.
+
+## Private plan ownership (user directive, 2026-10-03)
+
+All dated roadmap/execution plans and private acceptance evidence belong only in
+`cordin/zalava-dev`, including plans for this public module. Never add or copy
+`docs/plans/` here. Use the repository-explicit private workflow with a private
+plan path; stage only module changes in this repository.
