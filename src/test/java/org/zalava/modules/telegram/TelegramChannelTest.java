@@ -13,8 +13,8 @@ class TelegramChannelTest {
     try (var jar = new java.util.jar.JarFile(System.getProperty("module.artifact"));
         var metadata = jar.getInputStream(jar.getJarEntry("module-metadata.yaml"))) {
       assertThat(new String(metadata.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8))
-          .contains("seaRuntime: \">=1.0.0 <2.0.0\"")
-          .doesNotContain("seaRuntime: \">=0.1.0-alpha.");
+          .contains("zalavaRuntime: \">=1.0.0 <2.0.0\"")
+          .doesNotContain("zalavaRuntime: \">=0.1.0-alpha.");
     }
   }
 
