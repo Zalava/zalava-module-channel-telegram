@@ -9,6 +9,16 @@ import org.zalava.api.testing.ModuleContractKit;
 
 class TelegramChannelTest {
   @Test
+  void builtArtifactDeclaresTheHostRuntimeCompatibilityRatherThanSdkVersion() throws Exception {
+    try (var jar = new java.util.jar.JarFile(System.getProperty("module.artifact"));
+        var metadata = jar.getInputStream(jar.getJarEntry("module-metadata.yaml"))) {
+      assertThat(new String(metadata.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8))
+          .contains("seaRuntime: \">=1.0.0 <2.0.0\"")
+          .doesNotContain("seaRuntime: \">=0.1.0-alpha.");
+    }
+  }
+
+  @Test
   void loadsTheBuiltArtifactAndDeclaresTelegramChannel() throws Exception {
     try (ModuleContractKit kit =
         ModuleContractKit.load(
