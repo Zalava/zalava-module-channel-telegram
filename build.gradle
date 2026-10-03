@@ -49,6 +49,7 @@ tasks.named('jar') {
   from('module-metadata.yaml')
 }
 tasks.named('processResources') {
+  inputs.property('moduleVersion', project.version)
   filesMatching('module.properties') { expand(moduleVersion: project.version) }
 }
 tasks.register('verifyReleaseArtifact') {
