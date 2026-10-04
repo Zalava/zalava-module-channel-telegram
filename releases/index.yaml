@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "moduleId": "zalava-module-channel-telegram",
+  "releases": [
+    {
+      "version": "0.1.0-alpha.8",
+      "releaseTag": "v0.1.0-alpha.8",
+      "artifact": {
+        "groupId": "org.zalava.modules",
+        "artifactId": "zalava-module-channel-telegram",
+        "version": "0.1.0-alpha.8",
+        "sha256": "2b05bda95e9ddaadd3d05807a4768742d08528150b21e21ba006e9bcea11e2ff",
+        "type": "github-release-assets",
+        "repositoryUri": "https://github.com/Zalava/zalava-module-channel-telegram",
+        "releaseTag": "v0.1.0-alpha.8",
+        "assetName": "zalava-module-channel-telegram-0.1.0-alpha.8.jar"
+      },
+      "artifactBundle": false,
+      "source": {
+        "repository": "https://github.com/Zalava/zalava-module-channel-telegram.git",
+        "revision": "b1aa65e8aa74c71439ca13239e534a4ecd7c486b",
+        "license": "Apache-2.0"
+      },
+      "compatibility": {
+        "zalavaRuntime": ">=1.0.0 <2.0.0"
+      },
+      "security": {
+        "permissions": []
+      }
+    }
+  ]
+}
